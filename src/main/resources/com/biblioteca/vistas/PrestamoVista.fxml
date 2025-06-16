@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.biblioteca.vistas.PrestamoVista"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.biblioteca.controlador.PrestamoControlador">
 
-</AnchorPane>
+    <top>
+        <Label text="Gestión de Préstamos" style="-fx-font-size: 18px; -fx-padding: 10;" />
+    </top>
+
+    <center>
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 20;">
+            <TextField fx:id="usuarioIdField" promptText="ID Usuario"/>
+            <TextField fx:id="libroIdField" promptText="ID Libro"/>
+            <DatePicker fx:id="fechaPrestamoPicker" promptText="Fecha de Préstamo"/>
+            <DatePicker fx:id="fechaDevolucionPicker" promptText="Fecha de Devolución (opcional)"/>
+            <HBox spacing="10">
+                <Button text="Registrar" onAction="#registrarPrestamo"/>
+                <Button text="Actualizar" onAction="#actualizarPrestamo"/>
+                <Button text="Eliminar" onAction="#eliminarPrestamo"/>
+                <Button text="Limpiar" onAction="#limpiarCampos"/>
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <TableView fx:id="tablaPrestamos" prefHeight="200">
+            <columns>
+                <TableColumn fx:id="colId" text="ID"/>
+                <TableColumn fx:id="colUsuarioId" text="ID Usuario"/>
+                <TableColumn fx:id="colLibroId" text="ID Libro"/>
+                <TableColumn fx:id="colFechaPrestamo" text="Fecha Préstamo"/>
+                <TableColumn fx:id="colFechaDevolucion" text="Fecha Devolución"/>
+            </columns>
+        </TableView>
+    </bottom>
+</BorderPane>

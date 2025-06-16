@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.biblioteca.controlador.LibroControlador">
+
+    <top>
+        <Label text="Gestión de Libros" style="-fx-font-size: 18px; -fx-padding: 10;" />
+    </top>
+
+    <center>
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 20;">
+            <TextField fx:id="tituloField" promptText="Título"/>
+            <TextField fx:id="autorField" promptText="Autor"/>
+            <TextField fx:id="editorialField" promptText="Editorial"/>
+            <TextField fx:id="anioField" promptText="Año de Publicación"/>
+            <CheckBox fx:id="disponibleCheckBox" text="Disponible"/>
+            <HBox spacing="10">
+                <Button text="Agregar" onAction="#agregarLibro"/>
+                <Button text="Actualizar" onAction="#actualizarLibro"/>
+                <Button text="Eliminar" onAction="#eliminarLibro"/>
+                <Button text="Limpiar" onAction="#limpiarCampos"/>
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <TableView fx:id="tablaLibros" prefHeight="200">
+            <columns>
+                <TableColumn fx:id="colId" text="ID"/>
+                <TableColumn fx:id="colTitulo" text="Título"/>
+                <TableColumn fx:id="colAutor" text="Autor"/>
+                <TableColumn fx:id="colEditorial" text="Editorial"/>
+                <TableColumn fx:id="colAnio" text="Año"/>
+                <TableColumn fx:id="colDisponible" text="Disponible"/>
+            </columns>
+        </TableView>
+    </bottom>
+</BorderPane>

@@ -2,6 +2,8 @@ module com.biblioteca.sistemabiblioteca {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
+    requires java.sql;  // Esto soluciona el primer problema
+    requires mysql.connector.j;  // Para el driver de MySQL
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
