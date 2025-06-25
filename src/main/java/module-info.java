@@ -12,6 +12,7 @@ module com.biblioteca.sistemabiblioteca {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires jasperreports;
 
     opens com.biblioteca to javafx.fxml;
     exports com.biblioteca;

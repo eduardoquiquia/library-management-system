@@ -1,6 +1,10 @@
 package com.biblioteca.controlador;
 
 import javafx.fxml.FXML;
+import com.biblioteca.util.ReporteUtil;
+import javafx.scene.control.Alert;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -79,5 +83,30 @@ public class UsuarioControlador {
         emailField.clear();
         telefonoField.clear();
         tablaUsuarios.getSelectionModel().clearSelection();
+    }
+
+    @FXML
+    private void verReporteUsuarios() {
+        ReporteUtil.mostrarReporte("/com/biblioteca/reportes/Usuarios.jasper", null);
+    }
+
+    @FXML
+    private void verReporteUsuarioPorId() {
+        Usuario usuario = tablaUsuarios.getSelectionModel().getSelectedItem();
+        if (usuario != null) {
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("id_usuario", usuario.getIdUsuario());
+            ReporteUtil.mostrarReporte("/com/biblioteca/reportes/UsuarioPorId.jasper", parametros);
+        } else {
+            mostrarAlerta("Selecciona un usuario para generar el reporte.");
+        }
+    }
+
+    private void mostrarAlerta(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.WARNING);
+        alerta.setTitle("Advertencia");
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 }

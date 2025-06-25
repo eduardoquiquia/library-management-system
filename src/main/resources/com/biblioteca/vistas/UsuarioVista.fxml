@@ -36,4 +36,9 @@
             </columns>
         </TableView>
     </bottom>
+
+    <HBox spacing="10">
+        <Button text="Ver todos los usuarios" onAction="#verReporteUsuarios"/>
+        <Button text="Ver usuario seleccionado" onAction="#verReporteUsuarioPorId"/>
+    </HBox>
 </BorderPane>

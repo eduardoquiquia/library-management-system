@@ -1,11 +1,15 @@
 package com.biblioteca.controlador;
 
+import com.biblioteca.util.ReporteUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import com.biblioteca.modelo.Libro;
 import com.biblioteca.servicio.LibroServicio;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LibroControlador {
 
@@ -93,6 +97,23 @@ public class LibroControlador {
         anioField.clear();
         disponibleCheckBox.setSelected(false);
         tablaLibros.getSelectionModel().clearSelection();
+    }
+
+    @FXML
+    private void verTodosLibros() {
+        ReporteUtil.mostrarReporte("/com/biblioteca/reportes/Libros.jasper", null);
+    }
+
+    @FXML
+    private void verLibroSeleccionado() {
+        Libro libro = tablaLibros.getSelectionModel().getSelectedItem();
+        if (libro != null) {
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("id_libro", libro.getIdLibro());
+            ReporteUtil.mostrarReporte("/com/biblioteca/reportes/LibroPorId.jasper", parametros);
+        } else {
+            mostrarAlerta("Selecciona un libro para generar el reporte.", "aña");
+        }
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
