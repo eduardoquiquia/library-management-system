@@ -10,11 +10,12 @@ import com.biblioteca.servicio.PrestamoServicio;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PrestamoControlador {
 
-    @FXML private TextField usuarioIdField, libroIdField;
+    @FXML private TextField usuarioIdField, libroIdField, buscarIdField, buscarUsuarioIdField;
     @FXML private DatePicker fechaPrestamoPicker, fechaDevolucionPicker;
     @FXML private TableView<Prestamo> tablaPrestamos;
     @FXML private TableColumn<Prestamo, Integer> colId, colUsuarioId, colLibroId;
@@ -35,9 +36,42 @@ public class PrestamoControlador {
         cargarPrestamos();
     }
 
-    private void cargarPrestamos() {
+    public void cargarPrestamos() {
         listaPrestamos.setAll(prestamoServicio.listarPrestamos());
         tablaPrestamos.setItems(listaPrestamos);
+    }
+
+    @FXML
+    private void buscarPrestamoPorId() {
+        try {
+            int id = Integer.parseInt(buscarIdField.getText());
+            Prestamo prestamo = prestamoServicio.buscarPrestamoPorId(id);
+
+            if (prestamo != null) {
+                listaPrestamos.clear();
+                listaPrestamos.add(prestamo);
+            } else {
+                mostrarAlerta("No encontrado", "No se encontró un préstamo con el ID especificado");
+            }
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Error", "El ID debe ser un número válido");
+        }
+    }
+
+    @FXML
+    private void buscarPrestamosPorUsuario() {
+        try {
+            int idUsuario = Integer.parseInt(buscarUsuarioIdField.getText());
+            List<Prestamo> prestamos = prestamoServicio.listarPrestamosPorUsuario(idUsuario);
+
+            if (!prestamos.isEmpty()) {
+                listaPrestamos.setAll(prestamos);
+            } else {
+                mostrarAlerta("No encontrados", "No se encontraron préstamos para el usuario especificado");
+            }
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Error", "El ID de usuario debe ser un número válido");
+        }
     }
 
     @FXML

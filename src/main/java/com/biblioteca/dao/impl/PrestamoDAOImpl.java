@@ -29,6 +29,11 @@ public class PrestamoDAOImpl implements PrestamoDAO {
 
             stmt.executeUpdate();
 
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                prestamo.setIdPrestamo(generatedKeys.getInt(1)); // AQUÍ SE USA
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -8,7 +8,6 @@ public class Prestamo {
     private LocalDate fechaPrestamo;
     private LocalDate fechaDevolucion;
 
-    // Constructores
     public Prestamo() {}
 
     public Prestamo(int idPrestamo, int idUsuario, int idLibro, LocalDate fechaPrestamo, LocalDate fechaDevolucion) {
@@ -19,7 +18,6 @@ public class Prestamo {
         this.fechaDevolucion = fechaDevolucion;
     }
 
-    // Getters y Setters
     public int getIdPrestamo() { return idPrestamo; }
     public void setIdPrestamo(int idPrestamo) { this.idPrestamo = idPrestamo; }
 

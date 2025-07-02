@@ -14,7 +14,6 @@ public class PrestamoServicio {
     }
 
     public void registrarPrestamo(Prestamo prestamo) {
-        // Aquí podrías agregar lógica adicional como verificar disponibilidad del libro
         prestamoDAO.registrarPrestamo(prestamo);
     }
 

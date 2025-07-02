@@ -19,6 +19,8 @@ public class LibroControlador {
     @FXML private TableColumn<Libro, Integer> colId, colAnio;
     @FXML private TableColumn<Libro, String> colTitulo, colAutor, colEditorial;
     @FXML private TableColumn<Libro, Boolean> colDisponible;
+    @FXML private TextField buscarTituloField;
+    @FXML private TextField buscarIdField;
 
     private final LibroServicio libroServicio = new LibroServicio();
     private final ObservableList<Libro> listaLibros = FXCollections.observableArrayList();
@@ -36,7 +38,7 @@ public class LibroControlador {
         cargarLibros();
     }
 
-    private void cargarLibros() {
+    public void cargarLibros() {
         listaLibros.setAll(libroServicio.listarLibros());
         tablaLibros.setItems(listaLibros);
     }
@@ -86,6 +88,31 @@ public class LibroControlador {
             libroServicio.eliminarLibro(seleccionado.getIdLibro());
             cargarLibros();
             limpiarCampos();
+        }
+    }
+
+    @FXML
+    private void buscarPorTitulo() {
+        String titulo = buscarTituloField.getText();
+        if (titulo != null && !titulo.isEmpty()) {
+            listaLibros.setAll(libroServicio.buscarLibrosPorTitulo(titulo));
+        } else {
+            cargarLibros();
+        }
+    }
+
+    @FXML
+    private void buscarPorId() {
+        try {
+            int id = Integer.parseInt(buscarIdField.getText());
+            Libro libro = libroServicio.buscarLibroPorId(id);
+            if (libro != null) {
+                listaLibros.setAll(libro);
+            } else {
+                mostrarAlerta("No encontrado", "No existe un libro con ese ID");
+            }
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Error", "Ingresa un ID válido");
         }
     }
 

@@ -22,6 +22,11 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             stmt.setString(4, usuario.getTelefono());
             stmt.executeUpdate();
 
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                usuario.setIdUsuario(generatedKeys.getInt(1)); // AQUÍ SE USA
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

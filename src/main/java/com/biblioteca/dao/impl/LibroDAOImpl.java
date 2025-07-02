@@ -12,9 +12,9 @@ public class LibroDAOImpl implements LibroDAO {
 
     @Override
     public void agregarLibro(Libro libro) {
-        String sql = "INSERT INTO Libro (titulo, autor, editorial, anio_publicacion, disponible) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String query = "INSERT INTO Libro (titulo, autor, editorial, anio_publicacion, disponible) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conexion = ConexionBD.obtenerConexion();
+             PreparedStatement stmt = conexion.prepareStatement(query)) {
 
             stmt.setString(1, libro.getTitulo());
             stmt.setString(2, libro.getAutor());
@@ -22,6 +22,11 @@ public class LibroDAOImpl implements LibroDAO {
             stmt.setInt(4, libro.getAnioPublicacion());
             stmt.setBoolean(5, libro.isDisponible());
             stmt.executeUpdate();
+
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                libro.setIdLibro(generatedKeys.getInt(1)); // AQUÍ SE USA
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -31,9 +36,9 @@ public class LibroDAOImpl implements LibroDAO {
     @Override
     public Libro obtenerLibroPorId(int id) {
         Libro libro = null;
-        String sql = "SELECT * FROM Libro WHERE id_libro = ?";
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String query = "SELECT * FROM Libro WHERE id_libro = ?";
+        try (Connection conexion = ConexionBD.obtenerConexion();
+             PreparedStatement stmt = conexion.prepareStatement(query)) {
 
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -58,10 +63,10 @@ public class LibroDAOImpl implements LibroDAO {
     @Override
     public List<Libro> listarLibros() {
         List<Libro> libros = new ArrayList<>();
-        String sql = "SELECT * FROM Libro";
-        try (Connection conn = ConexionBD.obtenerConexion();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        String query = "SELECT * FROM Libro";
+        try (Connection conexion = ConexionBD.obtenerConexion();
+             Statement stmt = conexion.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
                 Libro libro = new Libro(
@@ -83,9 +88,9 @@ public class LibroDAOImpl implements LibroDAO {
 
     @Override
     public void actualizarLibro(Libro libro) {
-        String sql = "UPDATE Libro SET titulo = ?, autor = ?, editorial = ?, anio_publicacion = ?, disponible = ? WHERE id_libro = ?";
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String query = "UPDATE Libro SET titulo = ?, autor = ?, editorial = ?, anio_publicacion = ?, disponible = ? WHERE id_libro = ?";
+        try (Connection conexion = ConexionBD.obtenerConexion();
+             PreparedStatement stmt = conexion.prepareStatement(query)) {
 
             stmt.setString(1, libro.getTitulo());
             stmt.setString(2, libro.getAutor());
@@ -102,9 +107,9 @@ public class LibroDAOImpl implements LibroDAO {
 
     @Override
     public void eliminarLibro(int id) {
-        String sql = "DELETE FROM Libro WHERE id_libro = ?";
+        String query = "DELETE FROM Libro WHERE id_libro = ?";
         try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -117,9 +122,9 @@ public class LibroDAOImpl implements LibroDAO {
     @Override
     public List<Libro> buscarPorTitulo(String titulo) {
         List<Libro> libros = new ArrayList<>();
-        String sql = "SELECT * FROM Libro WHERE titulo LIKE ?";
+        String query = "SELECT * FROM Libro WHERE titulo LIKE ?";
         try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, "%" + titulo + "%");
             ResultSet rs = stmt.executeQuery();

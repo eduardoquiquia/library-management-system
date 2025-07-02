@@ -13,7 +13,7 @@ import com.biblioteca.servicio.UsuarioServicio;
 
 public class UsuarioControlador {
 
-    @FXML private TextField nombreField, apellidoField, emailField, telefonoField;
+    @FXML private TextField nombreField, apellidoField, emailField, telefonoField, buscarIdField;
     @FXML private TableView<Usuario> tablaUsuarios;
     @FXML private TableColumn<Usuario, Integer> colId;
     @FXML private TableColumn<Usuario, String> colNombre, colApellido, colEmail, colTelefono;
@@ -33,9 +33,26 @@ public class UsuarioControlador {
         cargarUsuarios();
     }
 
-    private void cargarUsuarios() {
+    public void cargarUsuarios() {
         listaUsuarios.setAll(usuarioServicio.listarUsuarios());
         tablaUsuarios.setItems(listaUsuarios);
+    }
+
+    @FXML
+    private void buscarUsuarioPorId() {
+        try {
+            int id = Integer.parseInt(buscarIdField.getText());
+            Usuario usuario = usuarioServicio.buscarUsuarioPorId(id);
+
+            if (usuario != null) {
+                listaUsuarios.clear();
+                listaUsuarios.add(usuario);
+            } else {
+                mostrarAlerta("No se encontró un usuario con el ID especificado");
+            }
+        } catch (NumberFormatException e) {
+            mostrarAlerta("El ID debe ser un número válido");
+        }
     }
 
     @FXML

@@ -7,7 +7,6 @@ public class Usuario {
     private String email;
     private String telefono;
 
-    // Constructores
     public Usuario() {}
 
     public Usuario(int idUsuario, String nombre, String apellido, String email, String telefono) {
@@ -18,7 +17,6 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    // Getters y Setters
     public int getIdUsuario() { return idUsuario; }
     public void setIdUsuario(int idUsuario) { this.idUsuario = idUsuario; }
 

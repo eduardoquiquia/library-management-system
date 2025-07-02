@@ -5,22 +5,20 @@ public class Libro {
     private String titulo;
     private String autor;
     private String editorial;
-    private int anioPublicacion;
+    private int publicacion;
     private boolean disponible;
 
-    // Constructores
     public Libro() {}
 
-    public Libro(int idLibro, String titulo, String autor, String editorial, int anioPublicacion, boolean disponible) {
+    public Libro(int idLibro, String titulo, String autor, String editorial, int publicacion, boolean disponible) {
         this.idLibro = idLibro;
         this.titulo = titulo;
         this.autor = autor;
         this.editorial = editorial;
-        this.anioPublicacion = anioPublicacion;
+        this.publicacion = publicacion;
         this.disponible = disponible;
     }
 
-    // Getters y Setters
     public int getIdLibro() { return idLibro; }
     public void setIdLibro(int idLibro) { this.idLibro = idLibro; }
 
@@ -33,8 +31,8 @@ public class Libro {
     public String getEditorial() { return editorial; }
     public void setEditorial(String editorial) { this.editorial = editorial; }
 
-    public int getAnioPublicacion() { return anioPublicacion; }
-    public void setAnioPublicacion(int anioPublicacion) { this.anioPublicacion = anioPublicacion; }
+    public int getAnioPublicacion() { return publicacion; }
+    public void setAnioPublicacion(int anioPublicacion) { publicacion = anioPublicacion; }
 
     public boolean isDisponible() { return disponible; }
     public void setDisponible(boolean disponible) { this.disponible = disponible; }

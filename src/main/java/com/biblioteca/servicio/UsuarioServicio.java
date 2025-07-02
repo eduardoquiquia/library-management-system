@@ -14,7 +14,6 @@ public class UsuarioServicio {
     }
 
     public void registrarUsuario(Usuario usuario) {
-        // Ejemplo de validación de lógica de negocio
         if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
             throw new IllegalArgumentException("El email es obligatorio");
         }
