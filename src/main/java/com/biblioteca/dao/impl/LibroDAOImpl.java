@@ -12,7 +12,7 @@ public class LibroDAOImpl implements LibroDAO {
 
     @Override
     public void agregarLibro(Libro libro) {
-        String query = "INSERT INTO Libro (titulo, autor, editorial, anio_publicacion, disponible) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Libro (titulo, autor, editorial, anio_publicacion, stock) VALUES (?, ?, ?, ?, ?)";
         try (Connection conexion = ConexionBD.obtenerConexion();
              PreparedStatement stmt = conexion.prepareStatement(query)) {
 
@@ -20,7 +20,7 @@ public class LibroDAOImpl implements LibroDAO {
             stmt.setString(2, libro.getAutor());
             stmt.setString(3, libro.getEditorial());
             stmt.setInt(4, libro.getAnioPublicacion());
-            stmt.setBoolean(5, libro.isDisponible());
+            stmt.setInt(5, libro.getStock());
             stmt.executeUpdate();
 
             ResultSet generatedKeys = stmt.getGeneratedKeys();
@@ -44,14 +44,7 @@ public class LibroDAOImpl implements LibroDAO {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                libro = new Libro(
-                        rs.getInt("id_libro"),
-                        rs.getString("titulo"),
-                        rs.getString("autor"),
-                        rs.getString("editorial"),
-                        rs.getInt("anio_publicacion"),
-                        rs.getBoolean("disponible")
-                );
+                libro = crearLibroDesdeResultSet(rs);
             }
 
         } catch (SQLException e) {
@@ -69,14 +62,7 @@ public class LibroDAOImpl implements LibroDAO {
              ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
-                Libro libro = new Libro(
-                        rs.getInt("id_libro"),
-                        rs.getString("titulo"),
-                        rs.getString("autor"),
-                        rs.getString("editorial"),
-                        rs.getInt("anio_publicacion"),
-                        rs.getBoolean("disponible")
-                );
+                Libro libro = crearLibroDesdeResultSet(rs);
                 libros.add(libro);
             }
 
@@ -88,7 +74,7 @@ public class LibroDAOImpl implements LibroDAO {
 
     @Override
     public void actualizarLibro(Libro libro) {
-        String query = "UPDATE Libro SET titulo = ?, autor = ?, editorial = ?, anio_publicacion = ?, disponible = ? WHERE id_libro = ?";
+        String query = "UPDATE Libro SET titulo = ?, autor = ?, editorial = ?, anio_publicacion = ?, stock = ? WHERE id_libro = ?";
         try (Connection conexion = ConexionBD.obtenerConexion();
              PreparedStatement stmt = conexion.prepareStatement(query)) {
 
@@ -96,7 +82,7 @@ public class LibroDAOImpl implements LibroDAO {
             stmt.setString(2, libro.getAutor());
             stmt.setString(3, libro.getEditorial());
             stmt.setInt(4, libro.getAnioPublicacion());
-            stmt.setBoolean(5, libro.isDisponible());
+            stmt.setInt(5, libro.getStock());
             stmt.setInt(6, libro.getIdLibro());
             stmt.executeUpdate();
 
@@ -120,8 +106,8 @@ public class LibroDAOImpl implements LibroDAO {
     }
 
     @Override
-    public List<Libro> buscarPorTitulo(String titulo) {
-        List<Libro> libros = new ArrayList<>();
+    public Libro buscarPorTitulo(String titulo) {
+        Libro libro = null;
         String query = "SELECT * FROM Libro WHERE titulo LIKE ?";
         try (Connection conn = ConexionBD.obtenerConexion();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -129,15 +115,28 @@ public class LibroDAOImpl implements LibroDAO {
             stmt.setString(1, "%" + titulo + "%");
             ResultSet rs = stmt.executeQuery();
 
+            if (rs.next()) {
+                libro = crearLibroDesdeResultSet(rs);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return libro;
+    }
+
+    @Override
+    public List<Libro> buscarPorAutor(String autor) {
+        List<Libro> libros = new ArrayList<>();
+        String query = "SELECT * FROM Libro WHERE autor LIKE ?";
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, "%" + autor + "%");
+            ResultSet rs = stmt.executeQuery();
+
             while (rs.next()) {
-                Libro libro = new Libro(
-                        rs.getInt("id_libro"),
-                        rs.getString("titulo"),
-                        rs.getString("autor"),
-                        rs.getString("editorial"),
-                        rs.getInt("anio_publicacion"),
-                        rs.getBoolean("disponible")
-                );
+                Libro libro = crearLibroDesdeResultSet(rs);
                 libros.add(libro);
             }
 
@@ -145,5 +144,37 @@ public class LibroDAOImpl implements LibroDAO {
             e.printStackTrace();
         }
         return libros;
+    }
+
+    @Override
+    public List<Libro> buscarPorEditorial(String editorial) {
+        List<Libro> libros = new ArrayList<>();
+        String query = "SELECT * FROM Libro WHERE editorial LIKE ?";
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, "%" + editorial + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Libro libro = crearLibroDesdeResultSet(rs);
+                libros.add(libro);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return libros;
+    }
+
+    private Libro crearLibroDesdeResultSet(ResultSet rs) throws SQLException {
+        return new Libro(
+                rs.getInt("id_libro"),
+                rs.getString("titulo"),
+                rs.getString("autor"),
+                rs.getString("editorial"),
+                rs.getInt("anio_publicacion"),
+                rs.getInt("stock")
+        );
     }
 }

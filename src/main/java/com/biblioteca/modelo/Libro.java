@@ -5,18 +5,18 @@ public class Libro {
     private String titulo;
     private String autor;
     private String editorial;
-    private int publicacion;
-    private boolean disponible;
+    private int anioPublicacion;
+    private int stock;
 
     public Libro() {}
 
-    public Libro(int idLibro, String titulo, String autor, String editorial, int publicacion, boolean disponible) {
+    public Libro(int idLibro, String titulo, String autor, String editorial, int anioPublicacion, int stock) {
         this.idLibro = idLibro;
         this.titulo = titulo;
         this.autor = autor;
         this.editorial = editorial;
-        this.publicacion = publicacion;
-        this.disponible = disponible;
+        this.anioPublicacion = anioPublicacion;
+        this.stock = stock;
     }
 
     public int getIdLibro() { return idLibro; }
@@ -31,10 +31,20 @@ public class Libro {
     public String getEditorial() { return editorial; }
     public void setEditorial(String editorial) { this.editorial = editorial; }
 
-    public int getAnioPublicacion() { return publicacion; }
-    public void setAnioPublicacion(int anioPublicacion) { publicacion = anioPublicacion; }
+    public int getAnioPublicacion() { return anioPublicacion; }
+    public void setAnioPublicacion(int anioPublicacion) {
+        int currentYear = java.time.Year.now().getValue();
+        if (anioPublicacion < 1000 || anioPublicacion > currentYear) {
+            throw new IllegalArgumentException("El año de publicación es inválido.");
+        }
+        this.anioPublicacion = anioPublicacion;
+    }
 
-    public boolean isDisponible() { return disponible; }
-    public void setDisponible(boolean disponible) { this.disponible = disponible; }
+    public int getStock() { return stock; }
+    public void setStock(int stock) {
+        if (stock < 0) {
+            throw new IllegalArgumentException("El stock no puede ser negativo.");
+        }
+        this.stock = stock;
+    }
 }
-

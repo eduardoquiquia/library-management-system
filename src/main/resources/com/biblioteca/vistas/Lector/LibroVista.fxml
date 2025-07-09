@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.biblioteca.controlador.Lector.LibroControlador">
+    <children>
+        <!-- Título -->
+        <Label alignment="CENTER" layoutX="300.0" layoutY="20.0" prefWidth="300.0" style="-fx-text-fill: #212529;" text="Catálogo de Libros" textAlignment="CENTER" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="20.0">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+
+        <!-- Panel de Búsqueda -->
+        <VBox layoutX="20.0" layoutY="55.0" prefHeight="203.0" prefWidth="826.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8; -fx-border-width: 1;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="55.0">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #495057;" text="Búsqueda de Libros">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+
+                <!-- Búsqueda por Título -->
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+
+                        <Label minWidth="80.0" style="-fx-font-weight: bold;" text="Por Título:">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="buscarTituloField" prefHeight="31.0" prefWidth="177.0" promptText="Ingresa el título del libro" style="-fx-background-radius: 5; -fx-border-color: #ced4da; -fx-border-radius: 5; -fx-border-width: 1;">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </TextField>
+                        <Button mnemonicParsing="false" onAction="#buscarPorTitulo" prefWidth="100.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold;" text="Buscar">
+                            <font>
+                                <Font size="13.0" />
+                            </font>
+                        </Button>
+
+                      <!-- Búsqueda por Editorial -->
+                      <HBox alignment="CENTER_LEFT" spacing="10.0">
+                          <children>
+                              <Label minWidth="80.0" style="-fx-font-weight: bold;" text="Por Editorial:">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                              </Label>
+                              <TextField fx:id="buscarEditorialField" prefHeight="31.0" prefWidth="191.0" promptText="Ingresa la editorial del libro" style="-fx-background-radius: 5; -fx-border-color: #ced4da; -fx-border-radius: 5; -fx-border-width: 1;">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                              </TextField>
+                              <Button mnemonicParsing="false" onAction="#buscarPorEditorial" prefWidth="100.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold;" text="Buscar">
+                                  <font>
+                                      <Font size="13.0" />
+                                  </font>
+                              </Button>
+                          </children>
+                      </HBox>
+                    </children>
+                </HBox>
+
+                <!-- Búsqueda por Autor -->
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Label minWidth="80.0" style="-fx-font-weight: bold;" text="Por Autor:">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="buscarAutorField" prefHeight="31.0" prefWidth="177.0" promptText="Ingresa el autor del libro" style="-fx-background-radius: 5; -fx-border-color: #ced4da; -fx-border-radius: 5; -fx-border-width: 1;">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </TextField>
+                        <Button mnemonicParsing="false" onAction="#buscarPorAutor" prefWidth="100.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold;" text="Buscar">
+                            <font>
+                                <Font size="13.0" />
+                            </font>
+                        </Button>
+      
+                      <!-- Búsqueda por ID -->
+                      <HBox alignment="CENTER_LEFT" spacing="10.0">
+                          <children>
+                              <Label minWidth="80.0" style="-fx-font-weight: bold;" text="Por ID:">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                              </Label>
+                              <TextField fx:id="buscarIdField" prefHeight="31.0" prefWidth="197.0" promptText="Ingresa el ID del libro" style="-fx-background-radius: 5; -fx-border-color: #ced4da; -fx-border-radius: 5; -fx-border-width: 1;">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                              </TextField>
+                              <Button mnemonicParsing="false" onAction="#buscarPorId" prefWidth="100.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold;" text="Buscar">
+                                  <font>
+                                      <Font size="13.0" />
+                                  </font>
+                              </Button>
+                          </children>
+                      </HBox>
+                    </children>
+                </HBox>
+
+                <!-- Botón Limpiar -->
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#limpiarCampos" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold;" text="Limpiar Todo">
+                            <font>
+                                <Font size="13.0" />
+                            </font>
+                        </Button>
+                    </children>
+
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#cargarLibros" prefWidth="120.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold;" text="Ver Todos">
+                            <font>
+                                <Font size="13.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+
+        <!-- Etiqueta de Resultados -->
+        <Label layoutX="24.0" layoutY="267.0" style="-fx-font-weight: bold; -fx-text-fill: #495057;" text="Resultados de la Búsqueda" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="267.0">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+
+        <!-- Tabla de Libros -->
+        <VBox spacing="5">
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #34495e; -fx-padding: 0 0 5 20;" text="Lista de Libros" />
+            <padding>
+                <Insets bottom="15" left="20" right="20" />
+            </padding>
+        </VBox>
+
+        <!-- Información adicional -->
+        <Label layoutX="20.0" layoutY="570.0" style="-fx-text-fill: #6c757d; -fx-font-style: italic;" text="💡 Consejos: Usa las opciones de búsqueda para encontrar libros específicos • Haz clic en 'Ver Todos' para mostrar el catálogo completo" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0">
+            <font>
+                <Font size="12.0" />
+            </font>
+        </Label>
+
+         <TableView fx:id="tablaLibros" layoutX="24.0" layoutY="293.0" prefHeight="270.0" prefWidth="826.0" style="-fx-font-size: 12px;">
+             <columns>
+                 <TableColumn fx:id="colId" maxWidth="80" minWidth="50" prefWidth="60" text="ID" />
+                 <TableColumn fx:id="colTitulo" minWidth="150" prefWidth="200" text="Título" />
+                 <TableColumn fx:id="colAutor" minWidth="120" prefWidth="150" text="Autor" />
+                 <TableColumn fx:id="colEditorial" minWidth="100" prefWidth="120" text="Editorial" />
+                 <TableColumn fx:id="colAnio" maxWidth="100" minWidth="60" prefWidth="80" text="Año" />
+                 <TableColumn fx:id="colStock" maxWidth="100" minWidth="60" prefWidth="80" text="Stock" />
+             </columns>
+         </TableView>
+    </children>
+</AnchorPane>

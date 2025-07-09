@@ -9,5 +9,7 @@ public interface LibroDAO {
     List<Libro> listarLibros();
     void actualizarLibro(Libro libro);
     void eliminarLibro(int id);
-    List<Libro> buscarPorTitulo(String titulo);
+    Libro buscarPorTitulo(String titulo);
+    List<Libro> buscarPorAutor(String autor);
+    List<Libro> buscarPorEditorial(String editorial);
 }

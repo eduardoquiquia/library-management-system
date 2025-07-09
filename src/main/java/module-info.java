@@ -16,6 +16,15 @@ module com.biblioteca.sistemabiblioteca {
 
     opens com.biblioteca to javafx.fxml;
     exports com.biblioteca;
+
     exports com.biblioteca.controlador;
     opens com.biblioteca.controlador to javafx.fxml;
+
+    exports com.biblioteca.controlador.Administrador;
+    opens com.biblioteca.controlador.Administrador to javafx.fxml;
+
+    exports com.biblioteca.controlador.Lector;
+    opens com.biblioteca.controlador.Lector to javafx.fxml;
+
+    opens com.biblioteca.modelo to javafx.base;
 }

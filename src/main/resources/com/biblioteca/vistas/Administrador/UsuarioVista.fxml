@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.biblioteca.controlador.Administrador.UsuarioControlador">
+
+    <top>
+        <VBox prefHeight="63.0" prefWidth="1038.0" spacing="10">
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Gestión de Usuarios" />
+
+            <!-- Sección de búsqueda -->
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Label style="-fx-font-weight: bold;" text="Buscar:" />
+                <TextField fx:id="buscarIdField" prefWidth="150" promptText="Buscar por ID de usuario" />
+                <Button onAction="#buscarUsuarioPorId" text="Buscar por ID" />
+                <Separator orientation="VERTICAL" />
+                <TextField fx:id="nombreBuscarField" prefWidth="120" promptText="Nombre" />
+                <TextField fx:id="apellidoBuscarField" prefWidth="120" promptText="Apellido" />
+                <Button onAction="#buscarPorNombreYApellido" text="Buscar por Nombre" />
+                <Button onAction="#cargarUsuarios" text="Ver Todos" />
+            </HBox>
+            <padding>
+                <Insets bottom="10" left="20" right="20" top="15" />
+            </padding>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="15">
+            <!-- Formulario de entrada -->
+            <VBox spacing="10">
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #34495e;" text="Datos del Usuario" />
+
+                <GridPane alignment="CENTER" hgap="15" prefHeight="66.0" prefWidth="890.0" vgap="15">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="100" prefWidth="120" />
+                        <ColumnConstraints minWidth="200" prefWidth="250" />
+                        <ColumnConstraints minWidth="100" prefWidth="120" />
+                        <ColumnConstraints minWidth="200" prefWidth="250" />
+                    </columnConstraints>
+
+                    <Label style="-fx-font-weight: bold;" text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="nombreField" prefWidth="250" promptText="Ingrese el nombre del usuario" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label style="-fx-font-weight: bold;" text="Apellido:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <TextField fx:id="apellidoField" prefWidth="250" promptText="Ingrese el apellido" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                    <Label style="-fx-font-weight: bold;" text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TextField fx:id="emailField" prefWidth="250" promptText="usuario@ejemplo.com" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <Label style="-fx-font-weight: bold;" text="Teléfono:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <TextField fx:id="telefonoField" prefWidth="250" promptText="Número de teléfono" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+                </GridPane>
+
+                <HBox alignment="CENTER_LEFT" spacing="15">
+                    <Label style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d; -fx-font-style: italic;" text="  * Todos los campos son obligatorios para registrar un usuario" />
+                </HBox>
+            </VBox>
+
+            <!-- Botones de acción principales -->
+            <VBox alignment="CENTER" spacing="10">
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #34495e;" text="Acciones Principales" />
+
+                <HBox alignment="CENTER" prefHeight="34.0" prefWidth="858.0" spacing="15">
+                    <Button onAction="#agregarUsuario" prefWidth="130" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15;" text="Agregar Usuario" />
+                    <Button onAction="#actualizarUsuario" prefWidth="120" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15;" text="Actualizar" />
+                    <Button onAction="#eliminarUsuario" prefWidth="120" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15;" text="Eliminar" />
+                    <Button onAction="#limpiarCampos" prefWidth="120" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15;" text="Limpiar Campos" />
+                </HBox>
+            </VBox>
+
+            <!-- Sección de gestión de usuario seleccionado -->
+            <VBox alignment="CENTER" spacing="10">
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #34495e;" text="Gestión de Usuario Seleccionado" />
+
+                <GridPane alignment="CENTER" hgap="15" prefHeight="78.0" prefWidth="886.0" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="120" prefWidth="140" />
+                        <ColumnConstraints minWidth="200" prefWidth="250" />
+                        <ColumnConstraints minWidth="120" prefWidth="140" />
+                    </columnConstraints>
+
+                    <Label style="-fx-font-weight: bold;" text="Nueva Contraseña:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <PasswordField fx:id="nuevoPasswordField" prefWidth="250" promptText="Ingrese nueva contraseña" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <Button onAction="#cambiarPassword" prefWidth="140" style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15;" text="Cambiar Contraseña" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+
+                    <Label style="-fx-font-weight: bold;" text="Nuevo Tipo Usuario:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TextField fx:id="nuevoTipoUsuarioField" prefWidth="250" promptText="Tipo de usuario (admin, user, etc.)" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Button onAction="#cambiarTipoUsuario" prefWidth="140" style="-fx-background-color: #8e44ad; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15;" text="Cambiar Tipo" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+                </GridPane>
+
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label prefHeight="18.0" prefWidth="401.0" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d; -fx-font-style: italic;" text="   💡 Selecciona un usuario de la tabla para cambiar su contraseña o tipo" />
+                </HBox>
+            </VBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <VBox spacing="5">
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #34495e; -fx-padding: 0 0 5 20;" text="Lista de Usuarios Registrados" />
+
+            <TableView fx:id="tablaUsuarios" prefHeight="300" style="-fx-font-size: 12px;">
+                <columns>
+                    <TableColumn fx:id="colId" maxWidth="100" minWidth="60" text="ID Usuario" />
+                    <TableColumn fx:id="colNombre" minWidth="120" prefWidth="150" text="Nombre" />
+                    <TableColumn fx:id="colApellido" minWidth="120" prefWidth="150" text="Apellido" />
+                    <TableColumn fx:id="colEmail" minWidth="160" prefWidth="200" text="Correo Electrónico" />
+                    <TableColumn fx:id="colTelefono" minWidth="100" prefWidth="130" text="Teléfono" />
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+
+            <!-- Información adicional -->
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #34495e;" text="💡 Consejos:" />
+                <Label style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;" text="• Selecciona una fila para actualizar, eliminar o cambiar datos" />
+                <Label style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;" text="• Usa las búsquedas para encontrar usuarios específicos" />
+                <Label style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;" text="• Verifica el formato del email antes de guardar" />
+            </HBox>
+
+            <padding>
+                <Insets bottom="20" left="20" right="20" top="5" />
+            </padding>
+        </VBox>
+    </bottom>
+</BorderPane>

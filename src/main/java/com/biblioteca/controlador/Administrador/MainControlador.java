@@ -1,4 +1,4 @@
-package com.biblioteca.controlador;
+package com.biblioteca.controlador.Administrador;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,17 +15,17 @@ public class MainControlador {
 
     @FXML
     private void abrirUsuarios() {
-        abrirVentana("/com/biblioteca/vistas/UsuarioVista.fxml", "Gestión de Usuarios");
+        abrirVentana("/com/biblioteca/vistas/Administrador/UsuarioVista.fxml", "Gestión de Usuarios");
     }
 
     @FXML
     private void abrirLibros() {
-        abrirVentana("/com/biblioteca/vistas/LibroVista.fxml", "Gestión de Libros");
+        abrirVentana("/com/biblioteca/vistas/Administrador/LibroVista.fxml", "Gestión de Libros");
     }
 
     @FXML
     private void abrirPrestamos() {
-        abrirVentana("/com/biblioteca/vistas/PrestamoVista.fxml", "Gestión de Préstamos");
+        abrirVentana("/com/biblioteca/vistas/Administrador/PrestamoVista.fxml", "Gestión de Préstamos");
     }
 
     @FXML

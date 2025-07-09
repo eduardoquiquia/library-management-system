@@ -7,7 +7,7 @@ import com.biblioteca.modelo.Libro;
 import java.util.List;
 
 public class LibroServicio {
-    private LibroDAO libroDAO;
+    private final LibroDAO libroDAO;
 
     public LibroServicio() {
         this.libroDAO = new LibroDAOImpl();
@@ -28,8 +28,16 @@ public class LibroServicio {
         return libroDAO.listarLibros();
     }
 
-    public List<Libro> buscarLibrosPorTitulo(String titulo) {
+    public Libro buscarLibrosPorTitulo(String titulo) {
         return libroDAO.buscarPorTitulo(titulo);
+    }
+
+    public List<Libro> buscarLibrosPorAutor(String autor) {
+        return libroDAO.buscarPorAutor(autor);
+    }
+
+    public List<Libro> buscarLibrosPorEditorial(String editorial) {
+        return libroDAO.buscarPorEditorial(editorial);
     }
 
     public void actualizarLibro(Libro libro) {

@@ -1,6 +1,5 @@
-package com.biblioteca.controlador;
+package com.biblioteca.controlador.Administrador;
 
-import com.biblioteca.util.ReporteUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
@@ -9,9 +8,7 @@ import com.biblioteca.modelo.Prestamo;
 import com.biblioteca.servicio.PrestamoServicio;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PrestamoControlador {
 
@@ -133,24 +130,6 @@ public class PrestamoControlador {
         fechaDevolucionPicker.setValue(null);
         tablaPrestamos.getSelectionModel().clearSelection();
     }
-
-    @FXML
-    private void verTodosPrestamos() {
-        ReporteUtil.mostrarReporte("/com/biblioteca/reportes/Prestamos.jasper", null);
-    }
-
-    @FXML
-    private void verPrestamoSeleccionado() {
-        Prestamo prestamo = tablaPrestamos.getSelectionModel().getSelectedItem();
-        if (prestamo != null) {
-            Map<String, Object> parametros = new HashMap<>();
-            parametros.put("id_prestamo", prestamo.getIdPrestamo());
-            ReporteUtil.mostrarReporte("/com/biblioteca/reportes/PrestamoPorId.jasper", parametros);
-        } else {
-            mostrarAlerta("Selecciona un préstamo para generar el reporte.", "aña");
-        }
-    }
-
 
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.ERROR);

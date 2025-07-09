@@ -7,7 +7,7 @@ import com.biblioteca.modelo.Prestamo;
 import java.util.List;
 
 public class PrestamoServicio {
-    private PrestamoDAO prestamoDAO;
+    private final PrestamoDAO prestamoDAO;
 
     public PrestamoServicio() {
         this.prestamoDAO = new PrestamoDAOImpl();

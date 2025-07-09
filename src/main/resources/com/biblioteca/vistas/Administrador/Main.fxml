@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.biblioteca.controlador.MainControlador"
+            fx:controller="com.biblioteca.controlador.Administrador.MainControlador"
             prefHeight="500.0" prefWidth="600.0"
             style="-fx-background-color: #f4f4f4;">
 

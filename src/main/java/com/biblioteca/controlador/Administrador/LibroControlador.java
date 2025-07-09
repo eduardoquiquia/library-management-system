@@ -1,26 +1,20 @@
-package com.biblioteca.controlador;
+package com.biblioteca.controlador.Administrador;
 
-import com.biblioteca.util.ReporteUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import com.biblioteca.modelo.Libro;
 import com.biblioteca.servicio.LibroServicio;
-
-import java.util.HashMap;
-import java.util.Map;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class LibroControlador {
 
-    @FXML private TextField tituloField, autorField, editorialField, anioField;
-    @FXML private CheckBox disponibleCheckBox;
+    @FXML private TextField tituloField, autorField, editorialField, anioField, stockField;
+    @FXML private TextField buscarTituloField, buscarAutorField, buscarEditorialField, buscarIdField;
     @FXML private TableView<Libro> tablaLibros;
-    @FXML private TableColumn<Libro, Integer> colId, colAnio;
+    @FXML private TableColumn<Libro, Integer> colId, colAnio, colStock;
     @FXML private TableColumn<Libro, String> colTitulo, colAutor, colEditorial;
-    @FXML private TableColumn<Libro, Boolean> colDisponible;
-    @FXML private TextField buscarTituloField;
-    @FXML private TextField buscarIdField;
 
     private final LibroServicio libroServicio = new LibroServicio();
     private final ObservableList<Libro> listaLibros = FXCollections.observableArrayList();
@@ -28,17 +22,18 @@ public class LibroControlador {
     @FXML
     public void initialize() {
         // Configurar columnas
-        colId.setCellValueFactory(cell -> new javafx.beans.property.SimpleIntegerProperty(cell.getValue().getIdLibro()).asObject());
-        colTitulo.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(cell.getValue().getTitulo()));
-        colAutor.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(cell.getValue().getAutor()));
-        colEditorial.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(cell.getValue().getEditorial()));
-        colAnio.setCellValueFactory(cell -> new javafx.beans.property.SimpleIntegerProperty(cell.getValue().getAnioPublicacion()).asObject());
-        colDisponible.setCellValueFactory(cell -> new javafx.beans.property.SimpleBooleanProperty(cell.getValue().isDisponible()).asObject());
+        colId.setCellValueFactory(new PropertyValueFactory<>("idLibro"));
+        colTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        colAutor.setCellValueFactory(new PropertyValueFactory<>("autor"));
+        colEditorial.setCellValueFactory(new PropertyValueFactory<>("editorial"));
+        colAnio.setCellValueFactory(new PropertyValueFactory<>("anioPublicacion"));
+        colStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
 
         cargarLibros();
     }
 
-    public void cargarLibros() {
+    @FXML
+    private void cargarLibros() {
         listaLibros.setAll(libroServicio.listarLibros());
         tablaLibros.setItems(listaLibros);
     }
@@ -51,13 +46,13 @@ public class LibroControlador {
             libro.setAutor(autorField.getText());
             libro.setEditorial(editorialField.getText());
             libro.setAnioPublicacion(Integer.parseInt(anioField.getText()));
-            libro.setDisponible(disponibleCheckBox.isSelected());
+            libro.setStock(Integer.parseInt(stockField.getText()));
 
             libroServicio.registrarLibro(libro);
             cargarLibros();
             limpiarCampos();
         } catch (NumberFormatException e) {
-            mostrarAlerta("Error", "El año debe ser un número entero");
+            mostrarAlerta("Error de Formato", "El año y el stock deben ser números enteros.");
         }
     }
 
@@ -70,14 +65,16 @@ public class LibroControlador {
                 seleccionado.setAutor(autorField.getText());
                 seleccionado.setEditorial(editorialField.getText());
                 seleccionado.setAnioPublicacion(Integer.parseInt(anioField.getText()));
-                seleccionado.setDisponible(disponibleCheckBox.isSelected());
+                seleccionado.setStock(Integer.parseInt(stockField.getText()));
 
                 libroServicio.actualizarLibro(seleccionado);
                 cargarLibros();
                 limpiarCampos();
             } catch (NumberFormatException e) {
-                mostrarAlerta("Error", "El año debe ser un número entero");
+                mostrarAlerta("Error de Formato", "El año y el stock deben ser números enteros.");
             }
+        } else {
+            mostrarAlerta("Selección Requerida", "Selecciona un libro para actualizar.");
         }
     }
 
@@ -88,6 +85,8 @@ public class LibroControlador {
             libroServicio.eliminarLibro(seleccionado.getIdLibro());
             cargarLibros();
             limpiarCampos();
+        } else {
+            mostrarAlerta("Selección Requerida", "Selecciona un libro para eliminar.");
         }
     }
 
@@ -102,6 +101,26 @@ public class LibroControlador {
     }
 
     @FXML
+    private void buscarPorAutor() {
+        String autor = buscarAutorField.getText();
+        if (autor != null && !autor.isEmpty()) {
+            listaLibros.setAll(libroServicio.buscarLibrosPorAutor(autor));
+        } else {
+            cargarLibros();
+        }
+    }
+
+    @FXML
+    private void buscarPorEditorial() {
+        String editorial = buscarEditorialField.getText();
+        if (editorial != null && !editorial.isEmpty()) {
+            listaLibros.setAll(libroServicio.buscarLibrosPorEditorial(editorial));
+        } else {
+            cargarLibros();
+        }
+    }
+
+    @FXML
     private void buscarPorId() {
         try {
             int id = Integer.parseInt(buscarIdField.getText());
@@ -109,10 +128,10 @@ public class LibroControlador {
             if (libro != null) {
                 listaLibros.setAll(libro);
             } else {
-                mostrarAlerta("No encontrado", "No existe un libro con ese ID");
+                mostrarAlerta("No encontrado", "No existe un libro con ese ID.");
             }
         } catch (NumberFormatException e) {
-            mostrarAlerta("Error", "Ingresa un ID válido");
+            mostrarAlerta("Error de Formato", "Ingresa un ID válido.");
         }
     }
 
@@ -122,30 +141,16 @@ public class LibroControlador {
         autorField.clear();
         editorialField.clear();
         anioField.clear();
-        disponibleCheckBox.setSelected(false);
+        stockField.clear();
+        buscarIdField.clear();
+        buscarTituloField.clear();
         tablaLibros.getSelectionModel().clearSelection();
     }
 
-    @FXML
-    private void verTodosLibros() {
-        ReporteUtil.mostrarReporte("/com/biblioteca/reportes/Libros.jasper", null);
-    }
-
-    @FXML
-    private void verLibroSeleccionado() {
-        Libro libro = tablaLibros.getSelectionModel().getSelectedItem();
-        if (libro != null) {
-            Map<String, Object> parametros = new HashMap<>();
-            parametros.put("id_libro", libro.getIdLibro());
-            ReporteUtil.mostrarReporte("/com/biblioteca/reportes/LibroPorId.jasper", parametros);
-        } else {
-            mostrarAlerta("Selecciona un libro para generar el reporte.", "aña");
-        }
-    }
-
     private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         alerta.showAndWait();
     }
